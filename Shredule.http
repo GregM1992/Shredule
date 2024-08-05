@@ -1,0 +1,6 @@
+@shredule_HostAddress = http://localhost:5286
+
+GET {{shredule_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
