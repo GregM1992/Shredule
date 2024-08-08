@@ -3,6 +3,7 @@
     public class Availability
     {
         public int Id { get; set; }
+        public int UserId { get; set; }
         public bool MonMorn { get; set; }
         public bool TueMorn { get; set; }
         public bool WedMorn { get; set; }

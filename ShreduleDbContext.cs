@@ -25,5 +25,37 @@ public class ShreduleDbContext : DbContext
             new User { Id = 3, Name = "Justin Welch", UserName = "JasonWalkerBRI", Password = "DerfoBlood", AvailabilityId = 3 },
         });
 
-    }
+        modelBuilder.Entity<Band>().HasData(new Band[] {
+            new Band { Id = 1, Name = "Cull", Password ="nunusCrawfish", ScheduleId = 1 },
+        });
+
+        modelBuilder.Entity<Show>().HasData(new Show[] {
+            new Show { Id = 2, DateTime = new DateTime(24,09,04), Venue="BlackBird Tattoo" },
+
+        });
+        modelBuilder.Entity<Practice>().HasData(new Practice[] {
+            new Practice { Id = 1, BandId = 1, DateTime= new DateTime(24,09,02) },
+        });
+        modelBuilder.Entity<Availability>().HasData(new Availability[] {
+            new Availability { Id = 1, UserId = 1, MonMorn = true, TueMorn = true, WedMorn = false, ThurMorn = false, FriMorn = false, SatMorn = true, SunMorn = false, MonNight = true, TueNight = false, WedNight = true, ThurNight = true, FriNight = false, SatNight = true, SunNight = false },
+            new Availability
+            {
+                Id = 2,
+                UserId = 2,
+                MonMorn = false,
+                TueMorn = true,
+                WedMorn = true,
+                ThurMorn = false,
+                FriMorn = false,
+                SatMorn = true,
+                SunMorn = false,
+                MonNight = true,
+                TueNight = false,
+                WedNight = true,
+                ThurNight = false,
+                FriNight = false,
+                SatNight = true,
+                SunNight = true, }
+            });
+            }
 }
