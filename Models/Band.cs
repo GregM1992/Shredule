@@ -10,6 +10,7 @@ namespace shredule.Models
         public int ScheduleId { get; set; }
         public ICollection<Show>? Shows { get; set; }
         public ICollection<Practice>? Practices { get; set; }
+        public ICollection<User>? Members { get; set; }
 
     }
 }

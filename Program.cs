@@ -48,5 +48,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthorization();
+app.MapControllers();
+
+UserAPI.Map(app);
+BandAPI.Map(app);
 
 app.Run();
