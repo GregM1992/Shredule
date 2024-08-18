@@ -53,5 +53,6 @@ app.MapControllers();
 
 UserAPI.Map(app);
 BandAPI.Map(app);
+PracticeAPI.Map(app);
 
 app.Run();
