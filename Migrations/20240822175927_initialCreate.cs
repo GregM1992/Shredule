@@ -42,17 +42,18 @@ namespace Shredule.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Shows",
+                name: "Bands",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    DateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    Venue = table.Column<string>(type: "text", nullable: true)
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    Password = table.Column<string>(type: "text", nullable: true),
+                    ScheduleId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Shows", x => x.Id);
+                    table.PrimaryKey("PK_Bands", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -72,58 +73,14 @@ namespace Shredule.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Bands",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: true),
-                    Password = table.Column<string>(type: "text", nullable: true),
-                    ScheduleId = table.Column<int>(type: "integer", nullable: false),
-                    UserId = table.Column<int>(type: "integer", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Bands", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Bands_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BandShow",
-                columns: table => new
-                {
-                    BandsId = table.Column<int>(type: "integer", nullable: false),
-                    ShowsId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BandShow", x => new { x.BandsId, x.ShowsId });
-                    table.ForeignKey(
-                        name: "FK_BandShow_Bands_BandsId",
-                        column: x => x.BandsId,
-                        principalTable: "Bands",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_BandShow_Shows_ShowsId",
-                        column: x => x.ShowsId,
-                        principalTable: "Shows",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Practices",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     BandId = table.Column<int>(type: "integer", nullable: false),
-                    DateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    DateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    Location = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -132,6 +89,51 @@ namespace Shredule.Migrations
                         name: "FK_Practices_Bands_BandId",
                         column: x => x.BandId,
                         principalTable: "Bands",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Shows",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    BandId = table.Column<int>(type: "integer", nullable: false),
+                    DateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    Venue = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Shows", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Shows_Bands_BandId",
+                        column: x => x.BandId,
+                        principalTable: "Bands",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BandUser",
+                columns: table => new
+                {
+                    BandsId = table.Column<int>(type: "integer", nullable: false),
+                    MembersId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BandUser", x => new { x.BandsId, x.MembersId });
+                    table.ForeignKey(
+                        name: "FK_BandUser_Bands_BandsId",
+                        column: x => x.BandsId,
+                        principalTable: "Bands",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BandUser_Users_MembersId",
+                        column: x => x.MembersId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -147,13 +149,8 @@ namespace Shredule.Migrations
 
             migrationBuilder.InsertData(
                 table: "Bands",
-                columns: new[] { "Id", "Name", "Password", "ScheduleId", "UserId" },
-                values: new object[] { 1, "Cull", "nunusCrawfish", 1, null });
-
-            migrationBuilder.InsertData(
-                table: "Shows",
-                columns: new[] { "Id", "DateTime", "Venue" },
-                values: new object[] { 2, new DateTime(24, 9, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "BlackBird Tattoo" });
+                columns: new[] { "Id", "Name", "Password", "ScheduleId" },
+                values: new object[] { 1, "Cull", "nunusCrawfish", 1 });
 
             migrationBuilder.InsertData(
                 table: "Users",
@@ -167,22 +164,27 @@ namespace Shredule.Migrations
 
             migrationBuilder.InsertData(
                 table: "Practices",
-                columns: new[] { "Id", "BandId", "DateTime" },
-                values: new object[] { 1, 1, new DateTime(24, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified) });
+                columns: new[] { "Id", "BandId", "DateTime", "Location" },
+                values: new object[] { 1, 1, new DateTime(24, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), null });
+
+            migrationBuilder.InsertData(
+                table: "Shows",
+                columns: new[] { "Id", "BandId", "DateTime", "Venue" },
+                values: new object[] { 2, 1, new DateTime(24, 9, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "BlackBird Tattoo" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bands_UserId",
-                table: "Bands",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BandShow_ShowsId",
-                table: "BandShow",
-                column: "ShowsId");
+                name: "IX_BandUser_MembersId",
+                table: "BandUser",
+                column: "MembersId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Practices_BandId",
                 table: "Practices",
+                column: "BandId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Shows_BandId",
+                table: "Shows",
                 column: "BandId");
         }
 
@@ -193,7 +195,7 @@ namespace Shredule.Migrations
                 name: "Availability");
 
             migrationBuilder.DropTable(
-                name: "BandShow");
+                name: "BandUser");
 
             migrationBuilder.DropTable(
                 name: "Practices");
@@ -202,10 +204,10 @@ namespace Shredule.Migrations
                 name: "Shows");
 
             migrationBuilder.DropTable(
-                name: "Bands");
+                name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Bands");
         }
     }
 }

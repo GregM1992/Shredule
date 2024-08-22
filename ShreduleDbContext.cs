@@ -30,7 +30,7 @@ public class ShreduleDbContext : DbContext
         });
 
         modelBuilder.Entity<Show>().HasData(new Show[] {
-            new Show { Id = 2, DateTime = new DateTime(24,09,04), Venue="BlackBird Tattoo" },
+            new Show { Id = 2, DateTime = new DateTime(24,09,04), Venue ="BlackBird Tattoo", BandId = 1 },
 
         });
         modelBuilder.Entity<Practice>().HasData(new Practice[] {

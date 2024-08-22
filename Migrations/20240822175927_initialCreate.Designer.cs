@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Shredule.Migrations
 {
     [DbContext(typeof(ShreduleDbContext))]
-    [Migration("20240808165353_initialCreate")]
+    [Migration("20240822175927_initialCreate")]
     partial class initialCreate
     {
         /// <inheritdoc />
@@ -24,19 +24,19 @@ namespace Shredule.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("BandShow", b =>
+            modelBuilder.Entity("BandUser", b =>
                 {
                     b.Property<int>("BandsId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("ShowsId")
+                    b.Property<int>("MembersId")
                         .HasColumnType("integer");
 
-                    b.HasKey("BandsId", "ShowsId");
+                    b.HasKey("BandsId", "MembersId");
 
-                    b.HasIndex("ShowsId");
+                    b.HasIndex("MembersId");
 
-                    b.ToTable("BandShow");
+                    b.ToTable("BandUser");
                 });
 
             modelBuilder.Entity("Shredule.Models.Practice", b =>
@@ -52,6 +52,9 @@ namespace Shredule.Migrations
 
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Location")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -183,12 +186,7 @@ namespace Shredule.Migrations
                     b.Property<int>("ScheduleId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Bands");
 
@@ -210,6 +208,9 @@ namespace Shredule.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("BandId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("timestamp without time zone");
 
@@ -218,12 +219,15 @@ namespace Shredule.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BandId");
+
                     b.ToTable("Shows");
 
                     b.HasData(
                         new
                         {
                             Id = 2,
+                            BandId = 1,
                             DateTime = new DateTime(24, 9, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Venue = "BlackBird Tattoo"
                         });
@@ -280,7 +284,7 @@ namespace Shredule.Migrations
                         });
                 });
 
-            modelBuilder.Entity("BandShow", b =>
+            modelBuilder.Entity("BandUser", b =>
                 {
                     b.HasOne("shredule.Models.Band", null)
                         .WithMany()
@@ -288,9 +292,9 @@ namespace Shredule.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("shredule.Models.Show", null)
+                    b.HasOne("shredule.Models.User", null)
                         .WithMany()
-                        .HasForeignKey("ShowsId")
+                        .HasForeignKey("MembersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -304,21 +308,20 @@ namespace Shredule.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("shredule.Models.Band", b =>
+            modelBuilder.Entity("shredule.Models.Show", b =>
                 {
-                    b.HasOne("shredule.Models.User", null)
-                        .WithMany("Bands")
-                        .HasForeignKey("UserId");
+                    b.HasOne("shredule.Models.Band", null)
+                        .WithMany("Shows")
+                        .HasForeignKey("BandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("shredule.Models.Band", b =>
                 {
                     b.Navigation("Practices");
-                });
 
-            modelBuilder.Entity("shredule.Models.User", b =>
-                {
-                    b.Navigation("Bands");
+                    b.Navigation("Shows");
                 });
 #pragma warning restore 612, 618
         }

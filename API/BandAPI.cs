@@ -86,18 +86,7 @@ namespace Shredule.API
                 }
             });
 
-            app.MapGet("/band/shows/{bandId}", (ShreduleDbContext db, int bandId) =>
-            {
-                var bandsShows = db.Bands.Include(b => b.Shows).Where(b => b.Id == bandId);
-                if (bandsShows.Any())
-                {
-                return Results.Ok(bandsShows);
-                }
-                else
-                {
-                    return Results.NotFound("");
-                }
-            });
+            
         }
     }
 }
