@@ -49,9 +49,26 @@ namespace Shredule.API
                     db.SaveChanges();
                     return Results.Ok("Show to delete");
                 }
-                else 
+                else
                 {
                     return Results.NotFound("");
+                }
+            });
+
+            app.MapPut("/shows/{showId}", (ShreduleDbContext db, int showId, Show updatedShow) =>
+            {
+                var showToUpdate = db.Shows.FirstOrDefault(s => s.Id == showId);
+                if (showToUpdate != null)
+                {
+                    showToUpdate.Venue = updatedShow.Venue;
+                    showToUpdate.DateTime = updatedShow.DateTime;
+                    db.SaveChanges();
+                    return Results.Created($"/shows/{showToUpdate.Id}", updatedShow);
+                }
+                else
+                {
+                    return Results.BadRequest("This show does not exist");
+                }
             });
             
 
