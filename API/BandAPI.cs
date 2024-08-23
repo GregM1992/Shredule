@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using shredule.Models;
 using Shredule.Models;
 
 namespace Shredule.API
