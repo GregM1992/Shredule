@@ -1,6 +1,4 @@
-﻿using Shredule.Models;
-
-namespace shredule.Models
+﻿namespace Shredule.Models
 {
     public class Band
     {
