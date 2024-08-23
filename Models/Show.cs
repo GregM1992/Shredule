@@ -1,4 +1,4 @@
-﻿namespace shredule.Models
+﻿namespace Shredule.Models
 {
     public class Show
     {

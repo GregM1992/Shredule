@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using shredule.Models;
 using Shredule.Models;
 
 namespace Shredule.API
@@ -10,7 +9,15 @@ namespace Shredule.API
         {
             app.MapGet("/availability/{UserId}", (ShreduleDbContext db, int UserId) =>
             {
-                var thisUsersAvailability = db.Ava
+               var thisUsersAvailability = db.Availability.FirstOrDefault(a => a.UserId == UserId);
+                if (thisUsersAvailability != null)
+                {
+                    return Results.Ok(thisUsersAvailability);
+                }
+                else
+                {
+                    return Results.NotFound("");
+                }
             });
         }
     }

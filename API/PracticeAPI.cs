@@ -27,6 +27,7 @@ namespace Shredule.API
                 {
                     newPractice.BandId = bandId;
                     newPractice.DateTime = newDate;
+                    newPractice.Location = newPractice.Location;
                     db.Practices.Add(newPractice);
                     db.SaveChanges();
                     return Results.Created($"/bandPractices/{newPractice.Id}", newPractice);

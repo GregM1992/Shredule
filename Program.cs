@@ -55,5 +55,6 @@ UserAPI.Map(app);
 BandAPI.Map(app);
 PracticeAPI.Map(app);
 ShowAPI.Map(app);
+AvailabilityAPI.Map(app);
 
 app.Run();

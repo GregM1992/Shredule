@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using shredule.Models;
 using Shredule.Models;
 using System.Runtime.CompilerServices;
 
@@ -10,6 +9,7 @@ public class ShreduleDbContext : DbContext
     public DbSet<Band> Bands { get; set; }
     public DbSet<Show> Shows { get; set; }
     public DbSet<Practice> Practices { get; set; }
+    public DbSet<Availability> Availability { get; set; }
 
     public ShreduleDbContext(DbContextOptions<ShreduleDbContext> context) : base(context)
     {
@@ -38,24 +38,7 @@ public class ShreduleDbContext : DbContext
         });
         modelBuilder.Entity<Availability>().HasData(new Availability[] {
             new Availability { Id = 1, UserId = 1, MonMorn = true, TueMorn = true, WedMorn = false, ThurMorn = false, FriMorn = false, SatMorn = true, SunMorn = false, MonNight = true, TueNight = false, WedNight = true, ThurNight = true, FriNight = false, SatNight = true, SunNight = false },
-            new Availability
-            {
-                Id = 2,
-                UserId = 2,
-                MonMorn = false,
-                TueMorn = true,
-                WedMorn = true,
-                ThurMorn = false,
-                FriMorn = false,
-                SatMorn = true,
-                SunMorn = false,
-                MonNight = true,
-                TueNight = false,
-                WedNight = true,
-                ThurNight = false,
-                FriNight = false,
-                SatNight = true,
-                SunNight = true, }
-            });
-            }
+            new Availability { Id = 2, UserId = 2, MonMorn = false,TueMorn = true, WedMorn = true, ThurMorn = false, FriMorn = false, SatMorn = true, SunMorn = false, MonNight = true, TueNight = false, WedNight = true, ThurNight = false, FriNight = false, SatNight = true, SunNight = true }, 
+        });
+    }
 }
