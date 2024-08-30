@@ -7,9 +7,9 @@ namespace Shredule.API
     {
         public static void Map(WebApplication app)
         {
-            app.MapGet("/bands/{id}", (ShreduleDbContext db, int id) =>
+            app.MapGet("/user/bands/{userId}", (ShreduleDbContext db, int userId) =>
             {
-                var usersBands = db.Bands.Include(b => b.Members).Where(bm => bm.Id == id).ToList();
+                var usersBands = db.Bands.Include(b => b.Members).Where(bm => bm.Id == userId).ToList();
                 if (usersBands.Any())
                 {
                     return Results.Ok(usersBands);
@@ -21,9 +21,9 @@ namespace Shredule.API
 
             });
 
-            app.MapGet("/bands/band/{id}", (ShreduleDbContext db, int id) =>
+            app.MapGet("/bands/band/{bandId}", (ShreduleDbContext db, int bandId) =>
             {
-                var thisBand = db.Bands.FirstOrDefault(b => b.Id == id);
+                var thisBand = db.Bands.FirstOrDefault(b => b.Id == bandId);
                 if (thisBand != null)
                 {
                     return Results.Ok(thisBand);
@@ -34,9 +34,9 @@ namespace Shredule.API
                 }
             });
 
-            app.MapDelete("/bands/{id}", (ShreduleDbContext db, int id) =>
+            app.MapDelete("/bands/{bandId}", (ShreduleDbContext db, int bandId) =>
             {
-                var bandToDelete = db.Bands.FirstOrDefault(bm => bm.Id == id);
+                var bandToDelete = db.Bands.FirstOrDefault(bm => bm.Id == bandId);
                 if (bandToDelete != null)
                 {
                     db.Bands.Remove(bandToDelete);
@@ -69,7 +69,7 @@ namespace Shredule.API
                 }
             });
 
-            app.MapPut("/bands/{id}", (ShreduleDbContext db, int id, NewBandDTO updatedBand) =>
+            app.MapPut("/bands/{bandId}", (ShreduleDbContext db, int bandId, NewBandDTO updatedBand) =>
             {
                 var bandToUpdate = db.Bands.FirstOrDefault();
                 if (bandToUpdate != null)
