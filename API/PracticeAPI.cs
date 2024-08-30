@@ -55,6 +55,25 @@ namespace Shredule.API
 
 
             });
+
+            app.MapPut("/bandPractice/{practiceId}", (ShreduleDbContext db, int practiceId, Practice updatedPractice) =>
+            {
+                var practiceToUpdate = db.Practices.FirstOrDefault(p => p.Id == practiceId);
+                if (practiceToUpdate != null)
+                {
+                    practiceToUpdate.Location = updatedPractice.Location;
+                    practiceToUpdate.DateTime = updatedPractice.DateTime;
+                    db.SaveChanges();
+                    return Results.Created($"/bandPractices/{practiceToUpdate.Id}", updatedPractice);
+                }
+                else
+                {
+                    return Results.NotFound();
+                }
+
+            });
+
+            
         }
     }
 }
