@@ -26,7 +26,7 @@ public class ShreduleDbContext : DbContext
         });
 
         modelBuilder.Entity<Band>().HasData(new Band[] {
-            new Band { Id = 1, Name = "Cull", Password ="nunusCrawfish", ScheduleId = 1 },
+            new Band { Id = 1, Name = "Cull", Password ="nunusCrawfish", ScheduleId = 1, LeaderId = 1},
         });
 
         modelBuilder.Entity<Show>().HasData(new Show[] {
