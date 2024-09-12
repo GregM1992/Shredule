@@ -11,21 +11,47 @@ namespace Shredule.API
             app.MapGet("/user/schedule/{userId}", (ShreduleDbContext db, int UserId) =>
             {
                 User user = db.Users.SingleOrDefault(u => u.Id == UserId);
-                List<Band> userBands = user.Bands.ToList();
-                List<Practice> allPractices = new List<Practice>();
-                List<Show> allShows = new List<Show>();
-                foreach (var band in userBands)
+                List<Band> userBands = db.Bands
+                                         .Include(band => band.Practices)
+                                         .Include(band => band.Shows)
+                                         .Where(band => band.Members.Contains(user)).ToList();
+                if (userBands == null)
                 {
-                    foreach (var practice in band.Practices)
+                    return Results.NotFound("No bands found");
+                } else
+                {
+
+                    ScheduleDTO userSchedule = new ScheduleDTO()
                     {
-                        allPractices.Add(practice);
-                    }
-                    foreach (var show in band.Shows)
+                        Practices = [],
+                        Shows = []
+                    };
+                    foreach (var band in userBands)
                     {
-                        allShows.Add(show);
+                        if (band.Practices != null)
+                        {
+                            foreach (var practice in band.Practices)
+                            {
+                                userSchedule.Practices.Add(practice);
+                            }
+                        }
+                        if (band.Shows != null)
+                        {
+                            foreach (var show in band.Shows)
+                            {
+                                userSchedule.Shows.Add(show);
+                            }
+                        }
                     }
+                    if (userSchedule.Shows.Count > 0 || userSchedule.Practices.Count > 0)
+                    {
+                        return Results.Ok(userSchedule);
+                    }
+                    else
+                    {
+                        return Results.Ok("Nothing scheduled");
+                    }           
                 }
-                return (allPractices, allShows);
             });
         }
     }
