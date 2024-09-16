@@ -26,7 +26,7 @@ public class ShreduleDbContext : DbContext
         });
 
         modelBuilder.Entity<Band>().HasData(new Band[] {
-            new Band { Id = 1, Name = "Cull", Password ="nunusCrawfish", ScheduleId = 1, LeaderId = 1},
+            new Band { Id = 1, Name = "Cull", Password ="nunusCrawfish", ScheduleId = 1 },
         });
 
         modelBuilder.Entity<Show>().HasData(new Show[] {
@@ -40,6 +40,5 @@ public class ShreduleDbContext : DbContext
             new Availability { Id = 1, UserId = 1, MonMorn = true, TueMorn = true, WedMorn = false, ThurMorn = false, FriMorn = false, SatMorn = true, SunMorn = false, MonNight = true, TueNight = false, WedNight = true, ThurNight = true, FriNight = false, SatNight = true, SunNight = false },
             new Availability { Id = 2, UserId = 2, MonMorn = false,TueMorn = true, WedMorn = true, ThurMorn = false, FriMorn = false, SatMorn = true, SunMorn = false, MonNight = true, TueNight = false, WedNight = true, ThurNight = false, FriNight = false, SatNight = true, SunNight = true }, 
         });
-
     }
 }
