@@ -142,9 +142,6 @@ namespace Shredule.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("LeaderId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
@@ -162,7 +159,6 @@ namespace Shredule.Migrations
                         new
                         {
                             Id = 1,
-                            LeaderId = 1,
                             Name = "Cull",
                             Password = "nunusCrawfish",
                             ScheduleId = 1
