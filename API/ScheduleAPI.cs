@@ -8,7 +8,7 @@ namespace Shredule.API
         //get user's full schedule for all their bands
         public static void Map(WebApplication app)
         {
-            app.MapGet("/user/schedule/{userId}", (ShreduleDbContext db, int UserId) =>
+            app.MapGet("/user/{userId}/schedule", (ShreduleDbContext db, int UserId) =>
             {
                 User user = db.Users.SingleOrDefault(u => u.Id == UserId);
                 List<Band> userBands = db.Bands
@@ -52,6 +52,46 @@ namespace Shredule.API
                     {
                         return Results.Ok("Nothing scheduled");
                     }
+                }
+            });
+
+            //get single band's full schedule
+            app.MapGet("/band/{bandId}/schedule", (ShreduleDbContext db, int bandId) => { 
+                Band band = db.Bands
+                .Include((band) => band.Practices)
+                .Include((band) => band.Shows)
+                .SingleOrDefault((band) => band.Id == bandId);
+                if (band == null)
+                {
+                    return Results.NotFound("Band not found");
+                } else
+                {
+                    ScheduleDTO bandSchedule = new ScheduleDTO();
+                    bandSchedule.Practices = [];
+                    if (band.Practices.Count > 0)
+                    {
+                        foreach (Practice practice in band.Practices)
+                        {
+                            bandSchedule.Practices.Add(practice);
+                        }
+                    }
+                    bandSchedule.Shows = [];
+                    if (band.Shows.Count > 0)
+                    {
+                        foreach (Show show in band.Shows)
+                        {
+                            bandSchedule.Shows.Add(show);
+                        }
+                    }
+                    if (bandSchedule.Shows.Count > 0 || bandSchedule.Practices.Count > 0)
+                    {
+                        return Results.Ok(bandSchedule);
+                    } else
+                    {
+                        return Results.Ok("Nothing scheduled");
+                    }
+
+
                 }
             });
         }
