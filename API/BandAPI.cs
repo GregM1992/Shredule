@@ -82,10 +82,14 @@ namespace Shredule.API
                 }
             });
 
-            app.MapPost("/bands/{bandId}/join", (ShreduleDbContext db, int bandId, int userId) =>
+            app.MapPost("/bands/{bandId}/join", (ShreduleDbContext db, int bandId, int userId, string password) =>
             {
                 var bandToJoin = db.Bands.Include(b => b.Members).FirstOrDefault(b => b.Id == bandId);
                 var userToJoin = db.Users.FirstOrDefault(u => u.Id == userId);
+                if (bandToJoin.Password != password)
+                {
+                    return Results.BadRequest("Incorrect password");
+                }
                 if (bandToJoin != null && userToJoin != null)
                 {
                     if (bandToJoin.Members == null)
