@@ -58,6 +58,7 @@ namespace Shredule.API
                 userBeingUpdated.UserName = user.UserName;
                 userBeingUpdated.Name = user.Name;
                 userBeingUpdated.Password = user.Password;
+                userBeingUpdated.ImageUrl = user.ImageUrl;
                 db.SaveChanges();
                 return Results.Ok("User has been updated");
             });
