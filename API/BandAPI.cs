@@ -59,6 +59,7 @@ namespace Shredule.API
                         Name = bandToCreate.Name,
                         Password = bandToCreate.Password,
                         LeaderId = userId,
+                        ImageUrl = bandToCreate.ImageUrl,
                         Members = [bandCreator]
                     };
 
@@ -113,6 +114,7 @@ namespace Shredule.API
                 {
                     bandToUpdate.Name = updatedBand.Name;
                     bandToUpdate.Password = updatedBand.Password;
+                    bandToUpdate.ImageUrl = updatedBand.ImageUrl;
                     db.SaveChanges();
                     return Results.Created($"/bands/{updatedBand.Id}", updatedBand);
                 }
