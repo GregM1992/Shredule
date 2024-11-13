@@ -7,9 +7,9 @@ namespace Shredule.API
     {
         public static void Map(WebApplication app)
         {
-            app.MapGet("/users/{id}", (ShreduleDbContext db, int id) => // get user by id
+            app.MapGet("/user/login", (ShreduleDbContext db, string username, string password) => // get user by id
             {
-                var user = db.Users.FirstOrDefault(u => u.Id == id);
+                var user = db.Users.FirstOrDefault(u => u.UserName.ToLower() == username.ToLower() && u.Password == password);
 
                 if (user == null)
                 {
