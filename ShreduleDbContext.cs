@@ -20,13 +20,13 @@ public class ShreduleDbContext : DbContext
         // seed data with campsite types
         modelBuilder.Entity<User>().HasData(new User[]
         {
-            new User { Id = 1, Name = "Greg Markus", UserName = "BassBoi92", Password = "PrimusSucks", AvailabilityId = 1 },
-            new User { Id = 2, Name = "Elias Macdonald", UserName = "BigThickie", Password = "ThickieBig", AvailabilityId = 2 },
-            new User { Id = 3, Name = "Justin Welch", UserName = "JasonWalkerBRI", Password = "DerfoBlood", AvailabilityId = 3 },
+            new User { Id = 1, Name = "Greg Markus", UserName = "BassBoi92", Password = "PrimusSucks", AvailabilityId = 1, ImageUrl = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fthenounproject.com%2Fbrowse%2Ficons%2Fterm%2Fblank-profile%2F&psig=AOvVaw1htfEIJYHXkNrLoKRBHDLk&ust=1731620342893000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKCB1c2i2okDFQAAAAAdAAAAABAE" },
+            new User { Id = 2, Name = "Elias Macdonald", UserName = "BigThickie", Password = "ThickieBig", AvailabilityId = 2, ImageUrl = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fthenounproject.com%2Fbrowse%2Ficons%2Fterm%2Fblank-profile%2F&psig=AOvVaw1htfEIJYHXkNrLoKRBHDLk&ust=1731620342893000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKCB1c2i2okDFQAAAAAdAAAAABAE" },
+            new User { Id = 3, Name = "Justin Welch", UserName = "JasonWalkerBRI", Password = "DerfoBlood", AvailabilityId = 3, ImageUrl = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fthenounproject.com%2Fbrowse%2Ficons%2Fterm%2Fblank-profile%2F&psig=AOvVaw1htfEIJYHXkNrLoKRBHDLk&ust=1731620342893000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKCB1c2i2okDFQAAAAAdAAAAABAE" },
         });
 
         modelBuilder.Entity<Band>().HasData(new Band[] {
-            new Band { Id = 1, LeaderId = 1, Name = "Cull", Password ="nunusCrawfish", ScheduleId = 1 },
+            new Band { Id = 1, LeaderId = 1, Name = "Cull", Password ="nunusCrawfish", ScheduleId = 1, ImageUrl = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.istockphoto.com%2Fphotos%2Flive-crawfish&psig=AOvVaw2JjsOS4Pa4iECZ35pGTyiL&ust=1731620204747000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCPDz_Yui2okDFQAAAAAdAAAAABAE" },
         });
 
         modelBuilder.Entity<Show>().HasData(new Show[] {
